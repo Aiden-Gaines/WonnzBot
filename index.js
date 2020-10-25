@@ -1,10 +1,9 @@
-const Discord = require('discord.js');
-
 // Heroku sets these up already, so this is needed for testing on a local server
 if (process.env.NODE_ENV != 'PRODUCTION') {
 	require('dotenv').config();
 }
 
+const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.login(process.env.BOT_TOKEN);

@@ -3,16 +3,18 @@ if (process.env.NODE_ENV != 'PRODUCTION') {
 	require('dotenv').config();
 }
 
+// Setup global constants
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
-client.login(process.env.BOT_TOKEN);
+const WONNZ_ID = '274190999532863488';
 
 // Log this so we know the bot is running
 client.on('ready', async () => {
 	console.log(`Logged in successfully as ${client.user.username}!`);
+	client.user.setPresence({ activity: { name: 'with the real WonnZ.' } });
 });
 
+// Hook this so we can do what we want in reaction to messages
 client.on('message', (msg) => {
 	// Split the message up into seperate words
 	const msgWords = msg.content.split(' ');
@@ -48,3 +50,22 @@ client.on('message', (msg) => {
 		});
 	});
 });
+
+// Hook this so we can copy WonnZ' info
+client.on('userUpdate', (oldUser, newUser) => {
+	// Check if the person is even WonnZ
+	if (newUser.id == WONNZ_ID) {
+		const newUsername = newUser.username;
+		const newPfp = newUser.displayAvatarURL();
+		// If it is WonnZ, see if his pfp and/or username changed
+		if (newUsername != oldUser.username) {
+			client.user.setUsername(newUsername);
+		}
+		if (newPfp != oldUser.displayAvatarURL()) {
+			client.user.setAvatar(newPfp);
+		}
+	}
+});
+
+// Finally, login
+client.login();

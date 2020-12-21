@@ -57,7 +57,7 @@ client.on('userUpdate', (oldUser, newUser) => {
 	if (newUser.id == WONNZ_ID) {
 		const newUsername = newUser.username;
 		const newPfp = newUser.displayAvatarURL();
-		// If it is WonnZ, see if his pfp and/or username changed
+		// If it is WonnZ, see if his pfp and/or username have changed
 		if (newUsername != oldUser.username) {
 			client.user.setUsername(newUsername);
 		}
